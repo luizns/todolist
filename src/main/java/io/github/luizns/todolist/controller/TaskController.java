@@ -9,6 +9,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/tasks")
@@ -32,5 +33,10 @@ public class TaskController {
                 .buildAndExpand(taskCreated.getId())
                 .toUri();
         return ResponseEntity.created(location).body(taskCreated);
+    }
+    @PutMapping("/{id}")
+    public ResponseEntity<Task> update(@RequestBody Task task, @PathVariable UUID id, HttpServletRequest request) {
+        var taskUpdated = service.update(task, id, request);
+        return ResponseEntity.ok().body(taskUpdated);
     }
 }
