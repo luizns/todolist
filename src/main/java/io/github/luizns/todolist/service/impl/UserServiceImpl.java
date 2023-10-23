@@ -2,7 +2,7 @@ package io.github.luizns.todolist.service.impl;
 
 import at.favre.lib.crypto.bcrypt.BCrypt;
 import io.github.luizns.todolist.domain.model.User;
-import io.github.luizns.todolist.domain.repository.UserRepository;
+import io.github.luizns.todolist.domain.repository.IUserRepository;
 import io.github.luizns.todolist.service.UserService;
 import org.springframework.stereotype.Service;
 
@@ -11,9 +11,9 @@ import java.util.NoSuchElementException;
 
 @Service
 public class UserServiceImpl implements UserService {
-    private final UserRepository repository;
+    private final IUserRepository repository;
 
-    public UserServiceImpl(UserRepository repository) {
+    public UserServiceImpl(IUserRepository repository) {
         this.repository = repository;
     }
 

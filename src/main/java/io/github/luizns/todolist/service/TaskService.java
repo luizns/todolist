@@ -15,4 +15,6 @@ public interface TaskService {
     List<Task> list(HttpServletRequest request);
 
     Task update(Task taskModel, @PathVariable UUID id, HttpServletRequest request);
+
+    void deleteTaskById(UUID taskId);
 }
