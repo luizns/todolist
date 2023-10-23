@@ -1,5 +1,7 @@
 package io.github.luizns.todolist.controller;
 
+import io.github.luizns.todolist.controller.DTO.TaskDTO;
+import io.github.luizns.todolist.controller.DTO.TaskRequestDTO;
 import io.github.luizns.todolist.domain.model.Task;
 import io.github.luizns.todolist.service.TaskService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -35,7 +37,7 @@ public class TaskController {
             @ApiResponse(responseCode = "200", description = "Operation successful")
     })
     @GetMapping
-    public List<Task> list(HttpServletRequest request) {
+    public List<TaskDTO> list(HttpServletRequest request) {
         return service.list(request);
     }
 
@@ -45,7 +47,7 @@ public class TaskController {
             @ApiResponse(responseCode = "201", description = "Task created successfully"),
     })
     @PostMapping
-    public ResponseEntity<Task> create(@RequestBody Task task, HttpServletRequest request) {
+    public ResponseEntity<TaskDTO> create(@RequestBody TaskRequestDTO task, HttpServletRequest request) {
         var taskCreated = service.create(task, request);
         URI location = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}")

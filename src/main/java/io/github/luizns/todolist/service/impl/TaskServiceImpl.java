@@ -1,12 +1,13 @@
 package io.github.luizns.todolist.service.impl;
 
+import io.github.luizns.todolist.controller.DTO.TaskDTO;
+import io.github.luizns.todolist.controller.DTO.TaskRequestDTO;
 import io.github.luizns.todolist.domain.model.Task;
 import io.github.luizns.todolist.domain.repository.ITaskRepository;
+import io.github.luizns.todolist.mapper.TaskConverter;
 import io.github.luizns.todolist.service.TaskService;
 import io.github.luizns.todolist.utils.Utils;
 import jakarta.servlet.http.HttpServletRequest;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -22,7 +23,7 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public Task create(Task task, HttpServletRequest request) {
+    public TaskDTO create(TaskRequestDTO task, HttpServletRequest request) {
         var idUser = request.getAttribute("idUser");
         task.setIdUser((UUID) idUser);
         var currentDate = LocalDateTime.now();
@@ -32,13 +33,19 @@ public class TaskServiceImpl implements TaskService {
         if (task.getStartAt().isAfter(task.getEndAt())) {
             throw new IllegalArgumentException("A data de início deve ser menor que a data de termino");
         }
-        return this.repository.save(task);
+        return TaskConverter.entityToDto( this.repository.save(TaskConverter.dtoToEntity(task)));
+
     }
 
     @Override
-    public List<Task> list(HttpServletRequest request) {
+    public List<TaskDTO> list(HttpServletRequest request) {
         var idUser = request.getAttribute("idUser");
-        return this.repository.findByIdUser((UUID) idUser);
+
+        return this.repository
+                .findByIdUser((UUID) idUser)
+                .stream().map(TaskConverter ::entityToDto)
+                .toList();
+
     }
 
     @Override

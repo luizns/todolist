@@ -4,7 +4,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
-import lombok.Data;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -12,6 +12,10 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Data
+@Builder
+@With
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity(name = "tb_tasks")
 public class Task {
     @Id
