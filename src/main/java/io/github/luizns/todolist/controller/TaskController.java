@@ -1,5 +1,6 @@
 package io.github.luizns.todolist.controller;
 
+
 import io.github.luizns.todolist.controller.DTO.TaskDTO;
 import io.github.luizns.todolist.controller.DTO.TaskRequestDTO;
 import io.github.luizns.todolist.domain.model.Task;
@@ -17,7 +18,6 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import java.net.URI;
 import java.util.List;
 import java.util.UUID;
-
 
 
 @CrossOrigin

@@ -4,6 +4,8 @@ import at.favre.lib.crypto.bcrypt.BCrypt;
 import io.github.luizns.todolist.domain.model.User;
 import io.github.luizns.todolist.domain.repository.IUserRepository;
 import io.github.luizns.todolist.service.UserService;
+import io.github.luizns.todolist.service.exception.BusinessException;
+import io.github.luizns.todolist.service.exception.NotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.UUID;
@@ -21,7 +23,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public User create(User userToCreate) {
         if (repository.existsByUsername(userToCreate.getUsername())) {
-            throw new IllegalArgumentException("This Username already exists.");
+            throw new BusinessException("This Username already exists.");
         }
 
         var passwordHashred = BCrypt.withDefaults()
@@ -33,7 +35,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User findById(UUID id) {
-        return repository.findById(id).orElseThrow(NoSuchElementException::new);
+        return repository.findById(id).orElseThrow(NotFoundException::new);
 
     }
 }
